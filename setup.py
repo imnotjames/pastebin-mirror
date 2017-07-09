@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pastebin-mirror',
-    version='0.0.1',
+    version='1.0.0',
     description='Mirror Pastebin to an SQLite DB',
     url='http://github.com/imnotjames/pastebin-mirror',
     author='James Ward',
