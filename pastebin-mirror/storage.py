@@ -137,13 +137,7 @@ class SQLite3Storage:
             )
         )
 
-#        self.connection.commit()
-
-        try:
-          self.connection.commit()
-        except:
-          print("no")
-          raise
+        self.connection.commit()
 
     def save_paste_content(self, table, key, content):
         self.connection.execute(
