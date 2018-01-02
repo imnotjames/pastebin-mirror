@@ -55,19 +55,25 @@ class SQLite3Storage:
         self.connection = sqlite3.connect(location)
 
     def initialize_tables(self, trending=False):
-        self.connection.execute(
-            '''
-            CREATE TABLE IF NOT EXISTS paste (
-                paste_key CHAR(8) PRIMARY KEY,
-                timestamp TIMESTAMP,
-                size INT,
-                expires TIMESTAMP,
-                title TEXT,
-                syntax TEXT,
-                user TEXT NULL
-            );
-            '''
-        )
+
+        try:
+          self.connection.execute(
+              '''
+              CREATE TABLE IF NOT EXISTS paste (
+                  paste_key CHAR(8) PRIMARY KEY,
+                  timestamp TIMESTAMP,
+                  size INT,
+                  expires TIMESTAMP,
+                  title TEXT,
+                  syntax TEXT,
+                  user TEXT NULL
+              );
+              '''
+          )
+        except sqlite3.OperationalError as err:
+          print("[!] Error accessing database file: {}".format(err))
+          print("[!] Fatal Error: Exiting...")
+          exit(1)
 
         self.connection.execute(
             '''
@@ -131,7 +137,13 @@ class SQLite3Storage:
             )
         )
 
-        self.connection.commit()
+#        self.connection.commit()
+
+        try:
+          self.connection.commit()
+        except:
+          print("no")
+          raise
 
     def save_paste_content(self, table, key, content):
         self.connection.execute(
