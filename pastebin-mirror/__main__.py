@@ -49,7 +49,6 @@ def archive_scrape_pastes(last_archive_time, scraper, storage, rate):
                          if not storage.has_paste_content('paste_content', x['key'])]
         print('[*] Fetching {} new pastes'.format(len(recent_pastes)), file=sys.stderr)
         for paste in recent_pastes:
-            
             key = paste['key']
             storage.save_paste_reference('paste', key, paste['date'], paste['size'],
                                          paste['expire'], paste['title'], paste['syntax'],
@@ -91,7 +90,7 @@ def main():
         storage.initialize_tables(args.trending)
     else:
         storage = FlatFileStorage(location=args.output)
-    
+
     last_scrape = -args.rate
     last_trending = -60 * 60
 
